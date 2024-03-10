@@ -17,12 +17,21 @@ use Illuminate\Support\Facades\Route;
 // admin-super
 // admin
 // host-member
+// host-co-member
 // member
 // general
 
 
 Route::get('/welcome', function () {
     return view('welcome');
+});
+
+Route::get('/terms_of_service', function () {
+    return view('terms_of_service');
+});
+
+Route::get('/privacy_policy', function () {
+    return view('privacy_policy');
 });
 
 Auth::routes();
@@ -49,3 +58,5 @@ Route::middleware(['role:admin-super,admin,host-member,member'])->group(function
     });
 
 });
+
+Route::resource('business', 'BusinessController');

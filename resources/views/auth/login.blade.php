@@ -126,6 +126,18 @@
                         </button>
                     </div>
                 </div>
+                <div class="col-12">
+                    <center>
+                        <p><b>การลงชื่อเข้าใช้หมายความว่าคุณยอมรับ</b><br></p> 
+                        <a class="text-info" style="font-size: 13px;" target="bank" href="{{ url('/privacy_policy') }}"> 
+                            <span style="color:red"><b>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</b></span>
+                        </a>
+                        <br>
+                        <a class="text-info" style="font-size: 13px;" target="bank" href="{{ url('/terms_of_service') }}"> 
+                            <span style="color:red"><b>ข้อกำหนดและเงื่อนไขการใช้บริการบน เว็บไซต์</b></span>
+                        </a>
+                    </center>
+                </div>
             </form>
         </div>
     </div>

@@ -51,7 +51,15 @@
 	    color: transparent;
 	}
 
-	.main-shadow {
+    .gradient-button {
+        background: radial-gradient(ellipse farthest-corner at right bottom, #D1B464 35%, #606060 100%, #606060 20%, #D1B464 100%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #606060 0%, #D1B464 15%, #D1B464 62.5%, #D1B464 100%);
+        background-size: cover;
+        border: none;
+        color: #000; /* สีข้อความ */
+        text-shadow: 1px 1px 1px #fff; /* เงาข้อความ */
+    }
+
+    .main-shadow {
       box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 10px 0 rgba(0, 0, 0, 0.15);
     }
 
@@ -161,16 +169,6 @@
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="javascript:;">
-										<i class="fa-duotone fa-repeat"></i><span>เปลี่ยนกิจการ</span>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="javascript:;">
-										<i class="fa-solid fa-plus"></i><span>เพิ่มกิจการใหม่</span>
-									</a>
-								</li>
-								<li>
 									<div class="dropdown-divider mb-0"></div>
 								</li>
 								<li>
@@ -189,122 +187,11 @@
 				</div>
 			</header>
 			<!--end header -->
-
-			<!--navigation-->
-			<div class="nav-container">
-				<!-- LOGO mobile -->
-				<div class="mobile-topbar-header bg-gradient-moonlit">
-					<div>
-						<img src="{{ asset('/theme_cms/images/logo/logo long.png') }}" class="logo-icon" alt="logo icon" style="width:120px;">
-					</div>
-					<div>
-						<!-- <h4 class="logo-text">Synadmin</h4> -->
-					</div>
-					<div class="toggle-icon ms-auto">
-						<i class="fa-solid fa-caret-left text-white"></i>
-					</div>
-				</div>
-
-				<!-- เมนู -->
-				<nav class="topbar-nav">
-					<ul class="metismenu" id="menu">
-						<li>
-							<a href="{{ url('/dashboard') }}" class="">
-						        <div class="parent-icon">
-						            <i id="icon_menu_1" class='bx bx-home-circle'></i>
-						        </div>
-						        <div id="name_menu_1" class="menu-title">Dashboard</div>
-						    </a>
-						</li>
-						<li>
-							<a class="" href="{{ url('/expense_list') }}">
-								<div class="parent-icon">
-									<i id="icon_menu_2" class="bx bx-line-chart"></i>
-								</div>
-								<div id="name_menu_2" class="menu-title">รายรับ-รายจ่าย</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="has-arrow">
-								<div class="parent-icon">
-									<i id="icon_menu_3" class="bx bx-category"></i>
-								</div>
-								<div id="name_menu_3" class="menu-title">คลังสินค้า</div>
-							</a>
-							<ul>
-								<li>
-									<a href="app-emailbox.html">
-										<i class="bx bx-right-arrow-alt"></i>รายการคงเหลือ
-									</a>
-								</li>
-								<li>
-									<a href="app-emailbox.html">
-										<i class="bx bx-right-arrow-alt"></i>รายการเข้า
-									</a>
-								</li>
-								<li>
-									<a href="app-chat-box.html">
-										<i class="bx bx-right-arrow-alt"></i>รายการออก
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon">
-									<i id="icon_menu_4" class="fa-solid fa-file-excel"></i>
-								</div>
-								<div id="name_menu_4" class="menu-title">รายงาน (Export Excel)</div>
-							</a>
-							<ul>
-								<li>
-									<a href="widgets.html">
-										<i class="bx bx-right-arrow-alt"></i>รายงานคลังสินค้า
-									</a>
-								</li>
-								<li>
-									<a href="widgets.html">
-										<i class="bx bx-right-arrow-alt"></i>รายงานรายรับ-รายจ่าย
-									</a>
-								</li>
-								<li>
-									<a href="widgets.html">
-										<i class="bx bx-right-arrow-alt"></i>รายงานข้อมูลสมาชิก
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon">
-									<i id="icon_menu_5" class="fa-regular fa-users-gear"></i>
-								</div>
-								<div id="name_menu_5" class="menu-title">การจัดการ</div>
-							</a>
-							<ul>
-								<li>
-									<a href="authentication-signin.html">
-										<i class="bx bx-right-arrow-alt"></i>แก้ไขข้อมูลกิจการ
-									</a>
-								</li>
-								<li>
-									<a href="authentication-signin.html">
-										<i class="bx bx-right-arrow-alt"></i>การจัดการสมาชิก
-									</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			</div>
-			<!--end navigation-->
 		</div>
 		<!--end header wrapper-->
 
-		<div class="page-wrapper">
-			<div class="page-content mt-3">
-				@yield('content')
-			</div>
+		<div style="margin-top: 40px;" class="p-5">
+			@yield('content')
 		</div>
 
 		<footer class="page-footer">
@@ -314,61 +201,6 @@
 		</footer>
 	</div>
 	<!--end wrapper-->
-
-
-	<script>
-		document.addEventListener('DOMContentLoaded', (event) => {
-	        // console.log("START");
-	        check_url_menu();
-	    });
-
-	    function check_url_menu() {
-	    	
-	    	document.querySelector('#icon_menu_1').classList.remove('bold-gold');
-	    	document.querySelector('#name_menu_1').classList.remove('bold-gold');
-	    	document.querySelector('#icon_menu_2').classList.remove('bold-gold');
-	    	document.querySelector('#name_menu_2').classList.remove('bold-gold');
-	    	document.querySelector('#icon_menu_3').classList.remove('bold-gold');
-	    	document.querySelector('#name_menu_3').classList.remove('bold-gold');
-	    	document.querySelector('#icon_menu_4').classList.remove('bold-gold');
-	    	document.querySelector('#name_menu_4').classList.remove('bold-gold');
-	    	document.querySelector('#icon_menu_5').classList.remove('bold-gold');
-	    	document.querySelector('#name_menu_5').classList.remove('bold-gold');
-
-	    	let full_url = "{{ url()->full() }}";
-	    	let sp_url = full_url.split('/');
-	    	let url_menu = sp_url[sp_url.length - 1];
-	    	// console.log(url_menu);
-
-	    	let menu_1 = ['dashboard'];
-	    	let menu_2 = ['aa','ss'];
-	    	let menu_3 = ['sscs','ss'];
-	    	let menu_4 = ['dd','ss'];
-	    	let menu_5 = ['nhn','ss'];
-
-	    	if(menu_1.includes(url_menu)){
-	    		document.querySelector('#icon_menu_1').classList.add('bold-gold');
-	    		document.querySelector('#name_menu_1').classList.add('bold-gold');
-	    	}
-	    	if(menu_2.includes(url_menu)){
-	    		document.querySelector('#icon_menu_1').classList.add('bold-gold');
-	    		document.querySelector('#name_menu_1').classList.add('bold-gold');
-	    	}
-	    	if(menu_3.includes(url_menu)){
-	    		document.querySelector('#icon_menu_1').classList.add('bold-gold');
-	    		document.querySelector('#name_menu_1').classList.add('bold-gold');
-	    	}
-	    	if(menu_4.includes(url_menu)){
-	    		document.querySelector('#icon_menu_1').classList.add('bold-gold');
-	    		document.querySelector('#name_menu_1').classList.add('bold-gold');
-	    	}
-	    	if(menu_5.includes(url_menu)){
-	    		document.querySelector('#icon_menu_1').classList.add('bold-gold');
-	    		document.querySelector('#name_menu_1').classList.add('bold-gold');
-	    	}
-
-	    }
-	</script>
 
 	<!-- Bootstrap JS -->
 	<script src="{{ asset('/theme_cms/js/bootstrap.bundle.min.js') }}"></script>

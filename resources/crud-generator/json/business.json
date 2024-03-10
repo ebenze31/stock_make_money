@@ -1,0 +1,44 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "detail",
+            "type": "text"
+        },
+        {
+            "name": "photo",
+            "type": "file"
+        },
+        {
+            "name": "host",
+            "type": "string"
+        },
+        {
+            "name": "member",
+            "type": "string"
+        },
+        {
+            "name": "category",
+            "type": "string"
+        },
+        {
+            "name": "sub_category",
+            "type": "string"
+        },
+        {
+            "name": "income",
+            "type": "float"
+        },
+        {
+            "name": "expenses",
+            "type": "float"
+        },
+        {
+            "name": "total_cost",
+            "type": "float"
+        }
+    ]
+}
