@@ -190,7 +190,7 @@
 		</div>
 		<!--end header wrapper-->
 
-		<div style="margin-top: 40px;" class="p-5">
+		<div style="margin-top: 40px;" class="py-5 px-3">
 			@yield('content')
 		</div>
 

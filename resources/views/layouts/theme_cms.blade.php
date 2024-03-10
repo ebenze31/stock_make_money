@@ -247,6 +247,11 @@
 										<i class="bx bx-right-arrow-alt"></i>รายการออก
 									</a>
 								</li>
+								<li>
+									<a href="app-chat-box.html">
+										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าแจ้งเตือนสินค้า
+									</a>
+								</li>
 							</ul>
 						</li>
 						<li>

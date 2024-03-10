@@ -71,7 +71,7 @@
     </div>
     <div class="col mt-2 mb-2">
         <div class="card main-shadow main-radius">
-            <img src="{{ asset('/theme_cms/images/logo/logo png.png') }}" class="card-img-top" alt="...">
+            <img src="{{ asset('/theme_cms/images/logo/หมูปิ้งแม่ยอด.png') }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -107,6 +107,7 @@
         </div>
     </div>
     <div class="col mt-2 mb-2">
+        <a href="{{ url('/business_create') }}">
         <div class="card main-shadow main-radius radius-10 gradient-button">
             <div class="card-body d-flex align-items-center justify-content-center">
                 <div class="">
@@ -118,6 +119,7 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 </div>
 @endsection

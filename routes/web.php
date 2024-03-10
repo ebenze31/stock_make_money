@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('/business_create', 'BusinessController@create');
+
 });
 
 // admin-super
@@ -50,8 +52,16 @@ Route::middleware(['role:admin-super'])->group(function () {
     // Route::resource('/covid19','Covid19Controller');
 });
 
+
+// host-co-member
+Route::middleware(['role:admin-super,admin,host-member,host-co-member'])->group(function () {
+
+    Route::get('/business/{id}/edit', 'BusinessController@create');
+
+});
+
 // member
-Route::middleware(['role:admin-super,admin,host-member,member'])->group(function () {
+Route::middleware(['role:admin-super,admin,host-member,host-co-member,member'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -59,4 +69,6 @@ Route::middleware(['role:admin-super,admin,host-member,member'])->group(function
 
 });
 
-Route::resource('business', 'BusinessController');
+// Route::resource('business', 'BusinessController');
+Route::resource('business_category', 'Business_categoryController');
+Route::resource('business_sub_category', 'Business_sub_categoryController');

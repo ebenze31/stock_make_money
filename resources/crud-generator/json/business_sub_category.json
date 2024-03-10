@@ -1,0 +1,12 @@
+{
+    "fields": [
+        {
+            "name": "name_sub",
+            "type": "string"
+        },
+        {
+            "name": "business_category_id",
+            "type": "string"
+        }
+    ]
+}
