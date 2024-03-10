@@ -25,10 +25,6 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/cms', function () {
-    return view('layouts.theme_cms');
-});
-
 Auth::routes();
 
 // Login general
