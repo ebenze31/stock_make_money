@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use App\Models\Business_category;
+use App\Models\Business_sub_category;
 use Illuminate\Http\Request;
 
 class Business_categoryController extends Controller
@@ -116,5 +117,16 @@ class Business_categoryController extends Controller
         Business_category::destroy($id);
 
         return redirect('business_category')->with('flash_message', 'Business_category deleted!');
+    }
+
+    function show_business_category(){
+        $data = Business_category::get();
+        return $data ;
+    }
+
+    function show_business_sub_category($category){
+        $data_category = Business_category::where('name',$category)->first();
+        $data = Business_sub_category::where('business_category_id',$data_category->id)->get();
+        return $data ;
     }
 }

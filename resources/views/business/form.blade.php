@@ -33,13 +33,18 @@
       display: flex;
       justify-content: center;
     }
+
+    .card-img-top {
+        object-fit: contain; /* ให้รูปภาพ fit กับพื้นที่ที่กำหนด */
+        height: 200px; /* กำหนดความสูงของรูปภาพ */
+    }
 </style>
 
 <div class="card border-top border-0 border-5 border-dark">
     <div class="card-body p-4">
         <div class="card-title d-flex align-items-center">
             <div>
-                <img src="{{ asset('/theme_cms/images/icons/report.png') }}" class="card-img-top" style="width: 50px;">
+                <img src="{{ asset('/theme_cms/images/icons/report.png') }}" class="" style="width: 50px;">
             </div>
             <h5 class="mb-0 mx-3 gold_color_text bold-gold">
                 เพิ่มข้อมูลกิจการของคุณ
@@ -48,46 +53,30 @@
         <hr>
         <div class="row">
             <div class="col-12 col-md-6">
-                <div class="form-group  col-12 mb-3 mt-3">
-                    <label for="name" class="control-label">ชื่อกิจการ</label>
-                    <input class="form-control" name="name" type="text" id="name" value="">
-                </div>
-                <div class="form-group  col-12 mb-3">
-                    <label for="detail" class="control-label">รายละเอียด</label>
-                    <input class="form-control" name="detail" type="text" id="detail" value="">
-                </div>
-                <div class="form-group  col-12 mb-3">
-                    <label for="title_link_content" class="control-label">ประเภทกิจการ</label>
-                    <input class="form-control" name="title_link_content" type="text" id="title_link_content" value="">
-                    <select class="custom-select" name="category_group" id="--field-66658" aria-required="true" data-gtm-form-interact-field-id="0">
-                        <option disabled="" value="">เลือกประเภทหลัก</option>
-                        <option value="72">ผู้เชี่ยวชาญ</option>
-                        <option value="50">ร้านอาหารและเครื่องดื่ม</option>
-                        <option value="51">ยานพาหนะ</option>
-                        <option value="52">อสังหาริมทรัพย์</option>
-                        <option value="53">การศึกษา</option>
-                        <option value="54">การท่องเที่ยว</option>
-                        <option value="55">ธุรกิจบันเทิง</option>
-                        <option value="57">สุขภาพ</option>
-                        <option value="58">ความงาม</option>
-                        <option value="59">องค์กร หรือสถาบัน</option>
-                        <option value="60">หน่วยงานราชการ</option>
-                        <option value="61">ธุรกิจบริการ</option>
-                        <option value="62">ค้าขาย, ร้านค้า</option>
-                        <option value="2505">ธุรกิจในพื้นที่ประเภทอื่น</option>
-                        <option value="73">องค์กรธุรกิจ, กลุ่มองค์กร</option>
-                        <option value="74">แบรนด์, ผลิตภัณฑ์</option>
-                        <option value="75">หนังสือ,นิตยสาร,หนังสือพิมพ์</option>
-                        <option value="76">ภาพยนตร์</option>
-                        <option value="77">ดนตรี</option>
-                        <option value="56">กีฬา</option>
-                        <option value="78">โทรทัศน์</option>
-                        <option value="79">เว็บไซต์&amp;บล็อก</option>
-                    </select>
-                </div>
-                <div class="form-group col-12 mb-3">
-                    <label for="link_content" class="control-label">ประเภทย่อย</label>
-                    <input class="form-control" name="link_content" type="text" id="link_content" value="">
+                <div class="row">
+                    <div class="form-group col-12 mb-3 mt-3">
+                        <label for="name" class="control-label">ชื่อกิจการ</label>
+                        <span class="text-danger">*</span>
+                        <input class="form-control" name="name" type="text" id="name" value="{{ isset($business->name) ? $business->name : ''}}" required>
+                    </div>
+                    <div class="form-group  col-12 mb-3">
+                        <label for="detail" class="control-label">รายละเอียด</label>
+                        <textarea class="form-control" rows="5" name="detail" type="textarea" id="detail" >{{ isset($business->detail) ? $business->detail : ''}}</textarea>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="category" class="control-label">ประเภทกิจการ</label>
+                        <span class="text-danger">*</span>
+                        <select name="category" id="category" class="form-control" required onchange="show_business_sub_category();">
+                                <option value="{{ isset($business->category) ? $business->category : 'เลือกประเภทกิจการ'}}" selected >{{ isset($business->category) ? $business->category : 'เลือกประเภทกิจการ'}}</option> 
+                        </select>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="sub_category" class="control-label">ประเภทย่อย</label>
+                        <span class="text-danger">*</span>
+                        <select name="sub_category" id="sub_category" class="form-control" required>
+                                <option value="{{ isset($business->sub_category) ? $business->sub_category : 'เลือกประเภทย่อย'}}" selected >{{ isset($business->sub_category) ? $business->sub_category : 'เลือกประเภทย่อย'}}</option> 
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 col-12">
@@ -95,26 +84,33 @@
                     <label for="photo" class="control-label">รูปภาพ</label>
                     <input class="form-control d-none" name="photo" type="file" id="photo" value="" accept="image/*" onchange="previewImage(this)">
                   
-                    <label id="upload_photo" for="photo" class="container_upload">
-                        <div class="upload_section">
-                            <div class="text-center">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
-                                <p>Upload img</p>
+                    @if( !empty($business->photo) )
+                        <div id="container_photo" class="container_upload_preview">
+                            <label for="photo" class="btn btn-success" style="top: 10px; right: 10px;position: absolute; z-index: 999999999999999999;">เลือกใหม่</label>
+                            <img id="preview_photo" src="{{ url('storage')}}/{{ $business->photo }}" alt="ภาพพรีวิว" class="mt-5 card-img-top py-2">
+                        </div>  
+                    @else
+                        <label id="upload_photo" for="photo" class="container_upload">
+                            <div class="upload_section">
+                                <div class="text-center">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <p>Upload img</p>
+                                </div>
                             </div>
-                        </div>
-                    </label>
-
-                    <div id="container_photo" class="container_upload_preview d-none">
-                        <label for="photo" class="btn btn-success" style="top: 10px; right: 10px;position: absolute; z-index: 999999999999999999;">เลือกใหม่</label>
-                        <img id="preview_photo" src="" alt="ภาพพรีวิว" class="mt-5 d-none" style="max-width:50px; max-height:50px !important;">
-                    </div>  
+                        </label>
+                    
+                        <div id="container_photo" class="container_upload_preview d-none">
+                            <label for="photo" class="btn btn-success" style="top: 10px; right: 10px;position: absolute; z-index: 999999999999999999;">เลือกใหม่</label>
+                            <img id="preview_photo" src="" alt="ภาพพรีวิว" class="mt-5 d-none card-img-top py-2">
+                        </div>  
+                    @endif
                 </div>
             </div>
-            <div class="form-group col-12">
+            <div class="form-group col-12 d-none">
                 <label for="host" class="control-label">User Id</label>
-                <input class="form-control" name="host" type="text" id="host" value="{{ Auth::user()->id }}">
+                <input class="form-control" name="host" type="text" id="host" value="{{ Auth::user()->id }}" readonly>
                 <label for="status" class="control-label">Status</label>
-                <input class="form-control" name="status" type="text" id="status" value="Active">
+                <input class="form-control" name="status" type="text" id="status" value="Active" readonly>
             </div>
         </div>
 
@@ -125,97 +121,86 @@
     </div>
 </div>
 
-
-
-<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-    <label for="name" class="control-label">{{ 'Name' }}</label>
-    <input class="form-control" name="name" type="text" id="name" value="{{ isset($business->name) ? $business->name : ''}}" >
-    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('detail') ? 'has-error' : ''}}">
-    <label for="detail" class="control-label">{{ 'Detail' }}</label>
-    <textarea class="form-control" rows="5" name="detail" type="textarea" id="detail" >{{ isset($business->detail) ? $business->detail : ''}}</textarea>
-    {!! $errors->first('detail', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
-    <label for="photo" class="control-label">{{ 'Photo' }}</label>
-    <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($business->photo) ? $business->photo : ''}}" >
-    {!! $errors->first('photo', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('host') ? 'has-error' : ''}}">
-    <label for="host" class="control-label">{{ 'Host' }}</label>
-    <input class="form-control" name="host" type="text" id="host" value="{{ isset($business->host) ? $business->host : ''}}" >
-    {!! $errors->first('host', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('member') ? 'has-error' : ''}}">
-    <label for="member" class="control-label">{{ 'Member' }}</label>
-    <input class="form-control" name="member" type="text" id="member" value="{{ isset($business->member) ? $business->member : ''}}" >
-    {!! $errors->first('member', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('category') ? 'has-error' : ''}}">
-    <label for="category" class="control-label">{{ 'Category' }}</label>
-    <input class="form-control" name="category" type="text" id="category" value="{{ isset($business->category) ? $business->category : ''}}" >
-    {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('sub_category') ? 'has-error' : ''}}">
-    <label for="sub_category" class="control-label">{{ 'Sub Category' }}</label>
-    <input class="form-control" name="sub_category" type="text" id="sub_category" value="{{ isset($business->sub_category) ? $business->sub_category : ''}}" >
-    {!! $errors->first('sub_category', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('income') ? 'has-error' : ''}}">
-    <label for="income" class="control-label">{{ 'Income' }}</label>
-    <input class="form-control" name="income" type="number" id="income" value="{{ isset($business->income) ? $business->income : ''}}" >
-    {!! $errors->first('income', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('expenses') ? 'has-error' : ''}}">
-    <label for="expenses" class="control-label">{{ 'Expenses' }}</label>
-    <input class="form-control" name="expenses" type="number" id="expenses" value="{{ isset($business->expenses) ? $business->expenses : ''}}" >
-    {!! $errors->first('expenses', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('total_cost') ? 'has-error' : ''}}">
-    <label for="total_cost" class="control-label">{{ 'Total Cost' }}</label>
-    <input class="form-control" name="total_cost" type="number" id="total_cost" value="{{ isset($business->total_cost) ? $business->total_cost : ''}}" >
-    {!! $errors->first('total_cost', '<p class="help-block">:message</p>') !!}
-</div>
-
-
-
-
-
 <script>
-  function previewImage(input) {
-    console.log(input.name);
-    let preview = document.getElementById('preview_' + input.name);
-    let container_preview = document.getElementById('container_' + input.name);
-    let upload_preview = document.getElementById('upload_' + input.name);
-    // let btn_select_new_img = document.querySelector('#btn_select_new_img');
-    // console.log('asd');
-    if (input.files && input.files[0]) {
-      let reader = new FileReader();
 
-      reader.onload = function(e) {
-        // edit_first_profile.classList.add('d-none');
-        // btn_select_new_img.classList.remove('d-none');
-        preview.src = e.target.result;
-        preview.classList.remove('d-none');
-        container_preview.classList.remove('d-none');
-        upload_preview.classList.add('d-none');
-        // Initialize or update cropper
-        if (preview.cropper) {
-          preview.cropper.destroy();
-        }
-      };
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // console.log("START");
+        show_business_category();
+    });
 
-      reader.readAsDataURL(input.files[0]);
-    } else {
-      preview.src = '#';
-      preview.classList.add('d-none');
-      container_preview.classList.add('d-none');
-      upload_preview.classList.remove('d-none');
+    function show_business_category(){
+        fetch("{{ url('/') }}/api/show_business_category")
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+                //UPDATE SELECT OPTION
+                let category = document.querySelector("#category");
+                    // category.innerHTML = "";
 
-      if (preview.cropper) {
-        preview.cropper.destroy();
-      }
+                for(let item of result){
+                    let option = document.createElement("option");
+                    option.text = item.name;
+                    option.value = item.name;
+                    category.add(option);
+                }
+                
+            });
     }
-  }
+
+    function show_business_sub_category(){
+        let category = document.querySelector("#category");
+        fetch("{{ url('/') }}/api/show_business_sub_category" + '/' + category.value)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+                //UPDATE SELECT OPTION
+                let sub_category = document.querySelector("#sub_category");
+                    sub_category.innerHTML = "";
+
+                for(let item of result){
+                    let option = document.createElement("option");
+                    option.text = item.name_sub;
+                    option.value = item.name_sub;
+                    sub_category.add(option);
+                }
+                
+            });
+    }
+
+    function previewImage(input) {
+        console.log(input.name);
+        let preview = document.getElementById('preview_' + input.name);
+        let container_preview = document.getElementById('container_' + input.name);
+        let upload_preview = document.getElementById('upload_' + input.name);
+        // let btn_select_new_img = document.querySelector('#btn_select_new_img');
+        // console.log('asd');
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                // edit_first_profile.classList.add('d-none');
+                // btn_select_new_img.classList.remove('d-none');
+                preview.src = e.target.result;
+                preview.classList.remove('d-none');
+                container_preview.classList.remove('d-none');
+                upload_preview.classList.add('d-none');
+                // Initialize or update cropper
+                if (preview.cropper) {
+                    preview.cropper.destroy();
+                }
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '#';
+            preview.classList.add('d-none');
+            container_preview.classList.add('d-none');
+            upload_preview.classList.remove('d-none');
+
+            if (preview.cropper) {
+                preview.cropper.destroy();
+            }
+        }
+    }
+
 </script>

@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Models\Business;
 use Illuminate\Http\Request;
+use Auth;
 
 class BusinessController extends Controller
 {
@@ -46,7 +47,19 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        return view('business.create');
+        $user = Auth::user();
+        $user_id = $user->id ;
+
+        $your_business = Business::where('host',$user_id)->get();
+        $count = count($your_business);
+
+        if($count >= 3){
+            return redirect('/home');
+        }
+        else{
+            return view('business.create');
+        }
+
     }
 
     /**
@@ -59,15 +72,28 @@ class BusinessController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->all();
+        $user = Auth::user();
+        $user_id = $user->id ;
+
+        $your_business = Business::where('host',$user_id)->get();
+        $count = count($your_business);
+
+        if($count >= 3){
+            return redirect('/404');
+        }
+        else{
+            $requestData = $request->all();
                 if ($request->hasFile('photo')) {
-            $requestData['photo'] = $request->file('photo')
-                ->store('uploads', 'public');
+                $requestData['photo'] = $request->file('photo')
+                    ->store('uploads', 'public');
+            }
+
+            Business::create($requestData);
+
+            // return redirect('business')->with('flash_message', 'Business added!');
+            return redirect('/home');
         }
 
-        Business::create($requestData);
-
-        return redirect('business')->with('flash_message', 'Business added!');
     }
 
     /**
@@ -118,7 +144,8 @@ class BusinessController extends Controller
         $business = Business::findOrFail($id);
         $business->update($requestData);
 
-        return redirect('business')->with('flash_message', 'Business updated!');
+        // return redirect('business')->with('flash_message', 'Business updated!');
+        return redirect('/home');
     }
 
     /**
@@ -133,5 +160,12 @@ class BusinessController extends Controller
         Business::destroy($id);
 
         return redirect('business')->with('flash_message', 'Business deleted!');
+    }
+
+    function get_data_your_business($user_id){
+
+        $your_business = Business::where('host',$user_id)->get();
+
+        return $your_business;
     }
 }
